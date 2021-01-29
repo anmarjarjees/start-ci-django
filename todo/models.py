@@ -1,4 +1,4 @@
-packages
+# By default, Djngo imports the models folder from django / db directory / inside the site-packages
 # here is the link for Django github: https://github.com/django/django
 # then you can follow this path: django/django/db/models/__init__.py
 # inside the file __init__.py, you will see this line:
@@ -9,11 +9,11 @@ from django.db import models
 # Create your models here.
 
 # Creating our class "Item"
-# Django will convert the "Item" class to "Item" tables in the database!
+# Django will convert the "Item" class to "items" table in the database!
 # Any custom class we add to python, we have to use class inhertince to inhirit from python models as explained above
 # below we are inherting from Django the base models.Model class:
 # this is the basic concept of OOP [Please refer to my lecture about OOP in Python for more details]
-class Iten(models.Model):
+class Item(models.Model):
     # we need to define the attributes (the fields):
     # plus adding some restrictions for each field
 
