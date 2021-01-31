@@ -5,7 +5,6 @@
 # from django.db.models.base import DEFERRED, Model  # isort:skip
 
 from django.db import models
-
 # Create your models here.
 
 # Creating our class "Item"
@@ -13,6 +12,8 @@ from django.db import models
 # Any custom class we add to python, we have to use class inhertince to inhirit from python models as explained above
 # below we are inherting from Django the base models.Model class:
 # this is the basic concept of OOP [Please refer to my lecture about OOP in Python for more details]
+
+
 class Item(models.Model):
     # we need to define the attributes (the fields):
     # plus adding some restrictions for each field
@@ -31,4 +32,4 @@ class Item(models.Model):
     # To change this default returned string to something meaningful, we need to override this method: __str__(self)
     def __str__(self):
         # just return the name attribute (the name field of our current class Item)
-        return self.name 
+        return self.name

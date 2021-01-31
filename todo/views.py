@@ -1,5 +1,12 @@
 # We need to import HttpResponse from the Django shortcuts
-from django.shortcuts import render, HttpResponse
+# We commented the "HTTPResponse" as we don't want this module after rendering html pages
+
+
+from django.shortcuts import render # , HttpResponse
+
+# Now to render the database contents in a template (html page)
+# We need to import our class Item from .models files:
+from .models import Item
 
 # Create your views here.
 
@@ -13,5 +20,21 @@ from django.shortcuts import render, HttpResponse
 # The HTTP request
 # The template name as it's
 # and return the rendered template:
+# def get_todo_list(request):
+# return render(request, 'todo/todo_list.html')
+
+# The new get_todo_list view => dealing with the database:
 def get_todo_list(request):
-    return render(request, 'todo/todo_list.html')
+    # run a querty to get all the items from our database table "items"
+    # and save the result into a python variable named "items"
+    items = Item.objects.all()
+
+    # Creating another variable "context" to be a dictionay with all the returned items infomraiton:
+    context = {
+        # first key "items" has the values of our items variable above
+        'items': items
+    }
+
+    # now we can add/pass the "context" as a third argument to the render function:
+    # to access the content in our todo_list.html template 
+    return render(request, 'todo/todo_list.html', context)

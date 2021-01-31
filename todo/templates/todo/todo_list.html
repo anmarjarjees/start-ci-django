@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do</title>
 </head>
+
 <body>
     <h1>Things I need to do:</h1>
+    <!-- We can render all the itmes keys from the context dictionary that we created inside the view function for this page  -->
+    <!-- using the Django template syntax as we did with Flask -->
+    {{ items }}
+    <!-- 
+        So bouble curly brackets are used with any template variable => { { } }
+        while any other kinds of functionality like for loops, if condition, etc will use the curly brackets percentage sign => { % % }
+     -->
+
+    <!-- 
+        The result will be:
+        <QuerySet [<Item: Create Item Class>, <Item: Register Item Model>]>
+
+        QuerySet is just like a list (array) thant we can loop through
+        This list has two items as we have two objects (items) in our database
+
+        We need to display them in a friendly way using for loop
+     -->
+
+    <table>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.done }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
+
 </html>
