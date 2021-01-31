@@ -23,9 +23,9 @@ from django.urls import path
 from todo.views import get_todo_list
 
 urlpatterns = [
-   path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # Using path() function:
-    # path('hello/', say_hello, name="hello") 
+    # path('hello/', say_hello, name="hello")
     # replace the url with empty string to access the required view (function) directly - acting as a home page:
-    path('', get_todo_list, name="get_todo_list") 
+    path('', get_todo_list, name="get_todo_list")
 ]

@@ -26,3 +26,9 @@ class Item(models.Model):
 
     # adding the same resitrictions for done field below and adding a defualt value of False:
     done = models.BooleanField(null=False, blank=False, default=False) 
+
+    # By default all models that inherit this base model class will use its built-in string method to display their class name followed by the word object as a generic way to display them
+    # To change this default returned string to something meaningful, we need to override this method: __str__(self)
+    def __str__(self):
+        # just return the name attribute (the name field of our current class Item)
+        return self.name 
