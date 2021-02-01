@@ -19,13 +19,14 @@ from django.urls import path
 # We need to import our Python function from views.py
 # from todo.views import say_hello
 
-# using get to do list:
-from todo.views import get_todo_list
+# using get to do list and add item:
+from todo.views import get_todo_list, add_item
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Using path() function:
     # path('hello/', say_hello, name="hello")
     # replace the url with empty string to access the required view (function) directly - acting as a home page:
-    path('', get_todo_list, name="get_todo_list")
+    path('', get_todo_list, name="get_todo_list"),
+    path('add', add_item, name="add")
 ]

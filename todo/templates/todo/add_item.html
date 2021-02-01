@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+</head>
+
+<body>
+    <h1>Add a Todo Item:</h1>
+    <!-- 
+        Creating a form for inserting a new item:
+        - method="post" is required => to receive and save the user's input 
+        - action="add" is required => which the add URL to submit the from to
+     -->
+    <form method="POST" action="add">
+        <div>
+            <p>
+                <label for="id_name">Name:</label>
+                <!-- 
+                    NOTES:
+                    - name attribute value will be used by the view function to access the name input's value (IMPORTANT for our code)
+                    - id attribute value to be used to identiy this element for CSS of JavaScript interaction if needed (Optional)
+                 -->
+                <input type="text" id="id_name" name="item_name">
+            </p>
+        </div>
+        <div>
+            <p>
+                <label for="id_done">Done:</label>
+                <input type="text" id="id_done" name="done">
+            </p>
+        </div>
+        <div>
+            <p>
+                <button type="submit">Add Item</button>
+            </p>
+        </div>
+    </form>
+</body>
+
+</html>

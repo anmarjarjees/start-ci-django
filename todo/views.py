@@ -38,3 +38,8 @@ def get_todo_list(request):
     # now we can add/pass the "context" as a third argument to the render function:
     # to access the content in our todo_list.html template 
     return render(request, 'todo/todo_list.html', context)
+
+
+# The new get_todo_list view => dealing with the database:
+def add_item(request):
+    return render(request, 'todo/add_item.html')
