@@ -15,6 +15,7 @@
         - action="add" is required => which the add URL to submit the from to
      -->
     <form method="POST" action="add">
+        {% csrf_token %}
         <div>
             <p>
                 <label for="id_name">Name:</label>
@@ -29,7 +30,7 @@
         <div>
             <p>
                 <label for="id_done">Done:</label>
-                <input type="text" id="id_done" name="done">
+                <input type="checkbox" id="id_done" name="done">
             </p>
         </div>
         <div>
