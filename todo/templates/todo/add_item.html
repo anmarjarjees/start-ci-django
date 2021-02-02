@@ -9,6 +9,12 @@
 
 <body>
     <h1>Add a Todo Item:</h1>
+    <p>
+        This page contains two types of form that have the same action just for learning demonstrations for my students.
+        You can use any one of them to add your items.
+    </p>
+    <hr>
+    <h2>First From Using Normal HTML Form Elements</h2>
     <!-- 
         Creating a form for inserting a new item:
         - method="post" is required => to receive and save the user's input 
@@ -33,6 +39,25 @@
                 <input type="checkbox" id="id_done" name="done">
             </p>
         </div>
+        <div>
+            <p>
+                <button type="submit">Add Item</button>
+            </p>
+        </div>
+    </form>
+
+    <hr>
+    <h2>Second Form Using Django Form Template</h2>
+    <form method="POST" action="add">
+        {% csrf_token %}
+        <!-- 
+            This was the old template { { form } } => we got all the form elements to be displayed horizontally 
+        -->
+        <!-- { { form } } -->
+        <!-- 
+            We will use the Django template option as_p to display them as block-level elements vertically
+         -->
+        {{ form.as_p }}
         <div>
             <p>
                 <button type="submit">Add Item</button>

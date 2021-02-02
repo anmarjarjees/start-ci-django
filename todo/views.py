@@ -8,6 +8,10 @@ from django.shortcuts import render, redirect  # , HttpResponse
 # We need to import our class Item from .models files:
 from .models import Item
 
+# now to use the Django feature of form templating that we created inside the file "forms.py"
+# we have to import our models "ItemForm" from ".forms" file "forms.py":
+from .forms import ItemForm
+
 # Create your views here.
 
 
@@ -42,8 +46,11 @@ def get_todo_list(request):
 # The new get_todo_list view => dealing with the database:
 # so "/add" URL will trigger this view (function)
 
+# Below is our old first function using pure HTML form
+# I renamed it to add_item_old as we will have the new add_item() function below it
 
-def add_item(request):
+
+def add_item_old(request):
     # First, we need to check what type of request this is, GET or POST?
     # GET is the default option only for rendering a specific template (HTML page) as written at the end of this function
     # POST is what we have to use here for posting the usring input to our database
@@ -68,3 +75,38 @@ def add_item(request):
 
     # If it's only a "GET" request (which is the default one), it will just redner the "add_item.html" page:
     return render(request, 'todo/add_item.html')
+
+# the new modified add_item() view after applying Django form template feature (from our file forms.py):
+def add_item(request):
+    # First, we need to check what type of request this is, GET or POST?
+    # GET is the default option only for rendering a specific template (HTML page) as written at the end of this function
+    # POST is what we have to use here for posting the usring input to our database
+    # So if it's "POST" request, we will run the code in this if condition block:
+    if request.method == 'POST':
+        # The other new changes:
+        # Instead of creating the items manually => name = request.POST.get('item_name')
+        # We will let our new form from forms.py do it:
+        # We can use a similar syntax as we did with creating the empty form
+        # but here we will populate the form in Django with request.post data:
+        form = ItemForm(request.POST)
+        # then calling is_valid() method in the form, and Django will automatically compare the data submitted in the post request
+        # to the data required on the model and make sure everything matches up
+        if form.is_valid():
+            # now to save our item we need to use:
+            form.save()
+
+            # Then redirect to the "get_todo_list" template as before
+            return redirect('get_todo_list')
+
+    # After importing our model ItemForm [Created inside forms.py], we can create an instance of it
+    form = ItemForm()
+
+    # creating a context object variable to contains the empty form
+    context = {
+        'form': form
+    }
+    # Then we can return the context to the template in render function below:
+
+    # If it's only a "GET" request (which is the default one), it will just redner the "add_item.html" page:
+    # we changed it by adding "context" argument
+    return render(request, 'todo/add_item.html', context)
