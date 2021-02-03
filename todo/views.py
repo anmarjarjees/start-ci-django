@@ -146,3 +146,26 @@ def edit_item(request, item_id):
     }
     # this view returns a template named "edit_item.html"
     return render(request, 'todo/edit_item.html', context)
+
+# this view doesn't need a template, it just qoing to toggle the item status, then redirect back to the "todo_list" template
+# like edit_item view, the "toggle_item()" view also needs the id of the item to toggle:
+def toggle_item(request, item_id):
+    # also the same logic to get the item
+    item = get_object_or_404(Item, id=item_id)
+    # Just reinverse the item status value (remember it's a boolean value in the database) using not operator:
+    item.done = not item.done # if it's True will become False, or False will become True
+    # save the item:
+    item.save()
+    # Finally, redirect back to "get_todeo_list()" view:
+    return redirect('get_todo_list')
+
+
+# Adding delete_item() view:
+# Same logice of editing an item but we will delete it instead of saving it:
+def delete_item(request, item_id):
+    # also the same logic to get the item
+    item = get_object_or_404(Item, id=item_id)
+    # Delete the item
+    item.delete()
+    # Finally, redirect back to "get_todeo_list()" view:
+    return redirect('get_todo_list')
