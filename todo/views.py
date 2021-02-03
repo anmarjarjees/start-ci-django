@@ -1,8 +1,7 @@
 # We need to import HttpResponse from the Django shortcuts
 # We commented the "HTTPResponse" as we don't want this module after rendering html pages
 
-
-from django.shortcuts import render, redirect  # , HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404  # , HttpResponse
 
 # Now to render the database contents in a template (html page)
 # We need to import our class Item from .models files:
@@ -77,6 +76,8 @@ def add_item_old(request):
     return render(request, 'todo/add_item.html')
 
 # the new modified add_item() view after applying Django form template feature (from our file forms.py):
+
+
 def add_item(request):
     # First, we need to check what type of request this is, GET or POST?
     # GET is the default option only for rendering a specific template (HTML page) as written at the end of this function
@@ -87,7 +88,7 @@ def add_item(request):
         # Instead of creating the items manually => name = request.POST.get('item_name')
         # We will let our new form from forms.py do it:
         # We can use a similar syntax as we did with creating the empty form
-        # but here we will populate the form in Django with request.post data:
+        # but here we will populate the form in Django with request.Post data:
         form = ItemForm(request.POST)
         # then calling is_valid() method in the form, and Django will automatically compare the data submitted in the post request
         # to the data required on the model and make sure everything matches up
@@ -110,3 +111,38 @@ def add_item(request):
     # If it's only a "GET" request (which is the default one), it will just redner the "add_item.html" page:
     # we changed it by adding "context" argument
     return render(request, 'todo/add_item.html', context)
+
+# the view "edit_item()":
+# This view will take the item_id paramater as it's required to grap that specific item from the database
+# The value of this item_id will be attached to the "/edit" link
+
+
+def edit_item(request, item_id):
+    # We need to grap the selected item from the database based on its id value:
+    # we can do it using a built-in Django shortcut method (function) called get_object_or_404
+    # this short cut (method) will get an instance of the "Item" model with an ID equal to the item ID that was passed into the view via the URL
+    # if the item is exist, the method will return it, otherwise it will return a 404 page
+    # Notice that this method "get_object_or_404" has to be imported to this file (at the top)
+    item = get_object_or_404(Item, id=item_id)
+
+    # the same block of handeling the post request from "add_item"
+    if request.method == 'POST':
+        # changing the ItemForm by adding the instance:
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            # now to save our item we need to use:
+            form.save()
+
+            # Then redirect to the "get_todo_list" template as before
+            return redirect('get_todo_list')
+
+    # the same like add_item view, we will create an instance of our item:
+    # NOTE:
+    # To repopulate the form with the current item's details from the database
+    # we can pass an instance argument to the form and fill it with the full information of the item that we got from the database in the first line
+    form = ItemForm(instance=item)
+    context = {
+        'form': form
+    }
+    # this view returns a template named "edit_item.html"
+    return render(request, 'todo/edit_item.html', context)

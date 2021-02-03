@@ -19,14 +19,19 @@ from django.urls import path
 # We need to import our Python function from views.py
 # from todo.views import say_hello
 
-# using get to do list and add item:
-from todo.views import get_todo_list, add_item
+# using get to do list and add item and edit_item view:
+from todo.views import get_todo_list, add_item, edit_item
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Using path() function:
     # path('hello/', say_hello, name="hello")
     # replace the url with empty string to access the required view (function) directly - acting as a home page:
-    path('', get_todo_list, name="get_todo_list"),
-    path('add', add_item, name="add")
+    path('', get_todo_list, name='get_todo_list'),
+    path('add', add_item, name='add'),
+    # adding a path with <item_id> the same as we did with my lecture for "Starting with Django Framework"
+    # the angular bracket syntax: <item_id> is used with Django URLs
+    # It is the mechanism by which the item ID makes its way from links or forms in our templates
+    # through the URL and into the view which expects it as a parameter
+    path('edit/<item_id>', edit_item, name='edit')
 ]

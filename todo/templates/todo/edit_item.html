@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+</head>
+
+<body>
+    <h1>Edit a Todo Item:</h1>
+    <!-- 
+        NOTE: 
+        We can remove the action attribute, as the form will be sumitted to the same URL we're currently on (to the same page itself)
+    -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <p>
+                <button type="submit">Update Item</button>
+            </p>
+        </div>
+    </form>
+</body>
+
+</html>
