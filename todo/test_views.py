@@ -54,7 +54,7 @@ class TestViews(TestCase):
         # creating an item to be used in this test:
         item = Item.objects.create(name='Test Todo Item')
 
-        # now we can pass the "item" variable below using Python f string:
+        # now we can pass the "item.id" variable below using Python f string:
         response = self.client.get(f'/edit/{item.id}')
         self.assertEqual(response.status_code, 200)
 
@@ -108,3 +108,21 @@ class TestViews(TestCase):
         updated_item = Item.objects.get(id=item.id)
         # now we can assertFalse to check its done status:
         self.assertFalse(updated_item.done)
+
+    # adding another test for "can edit an item":
+    def test_can_edit_item(self):
+        # like toggling an item, we will also create a new item (no need for done status):
+        item = Item.objects.create(name='Test Todo Item')
+
+        # to post the updated name:
+        # Using the same syntax as with edit, but this time for "post()" instead of "get()":
+        # now we can pass the "item.id" plus the "name" variable below using Python f string:
+        response = self.client.post(
+            f'/edit/{item.id}', {'name': 'Updated Name'})
+        # then the same code as toggling, getting the updated item:
+        # After editing the item, the view should redirect us to the home page:
+        self.assertRedirects(response, '/')
+        # getting the updated item form the database based on its id value:
+        updated_item = Item.objects.get(id=item.id)
+        # finally, we can test that the updated items name is equal to updated name using    assertEqual():
+        self.assertEqual(updated_item.name, 'Updated Name')
