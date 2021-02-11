@@ -16,3 +16,11 @@ class TestModel(TestCase):
         self.assertFalse(item.done)
 
 # We can now run just this test file
+
+# after checking the ceverage report we found that we also need to test the method [def __str__(self):]
+# testing if this method does return the item name:
+    def test_item_string_method_returns_name(self):
+        # creating an item with a text (name's value) of "Test Todo Item"
+        item = Item.objects.create(name='Test Todo Item')
+        # using assertEqual() to confirm that this name is returned when we render this item as a string:
+        self.assertEqual(str(item),'Test Todo Item')
