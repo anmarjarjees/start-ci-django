@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+# Importing the dj_database_url to be used with our database connection:
+import dj_database_url
 
 from pathlib import Path
 
@@ -74,13 +76,18 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+DATABASES = {
+    # Changing the value of the default database with a call to "dj_database_url.pars"
+    # Using parse(' The full url string from heroky goes here ') function and paste the the full Database URL from Heroku
+    'default': dj_database_url.parse('postgres://sjshrtjwkfpyos:cba8d8d7ccb1fe65ac63d3e2f0af01ed46b608bb12258df6068c1beac538387c@ec2-52-23-190-126.compute-1.amazonaws.com:5432/db9dsgqun1ns2b')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
