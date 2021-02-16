@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 # Importing the dj_database_url to be used with our database connection:
 import dj_database_url
 
-# We are importing the os to be used in this settings:
-import os
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
