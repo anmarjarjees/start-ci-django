@@ -31,7 +31,8 @@ DEBUG = True
 # ALLOWED_HOSTS = [] # it's empty by default
 # *****************************************************************
 # adding our urls:
-ALLOWED_HOSTS = ['https://anmar-todo-demo.herokuapp.com/']
+# Notice that we cannot include the "https://"
+ALLOWED_HOSTS = ['anmar-todo-demo.herokuapp.com/']
 
 
 # Application definition
