@@ -27,7 +27,11 @@ SECRET_KEY = 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Changing the ALLOWED_HOSTS list to add our heroku url for our app
+# ALLOWED_HOSTS = [] # it's empty by default
+# *****************************************************************
+# adding our urls:
+ALLOWED_HOSTS = ['https://anmar-todo-demo.herokuapp.com/']
 
 
 # Application definition
