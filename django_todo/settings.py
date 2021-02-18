@@ -16,6 +16,14 @@ import dj_database_url
 # We need to import os to be used in this file:
 import os
 
+# Our Code:
+# Adding/Creating a variable called "development":
+development = os.environ.get('DEVELOPMENT', False)
+# The line above means that:
+# If there's an environment variable called "DEVELOPMENT" in the environment
+# The variable "development" will be set to the value of "DEVELOPMENT"
+# etherwise (if DEVELOPMENT does NOT exist) => the variable development will be set to "False"
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +48,15 @@ SECRET_KEY = os.environ.get(
     'SECRET_KEY', 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# We will change this line, instead of DEBUG = True or DEBUG = False
+# DEBUG = True
+# We can just set it to our variable "development" that we created at the top of this file:
+# This means that in development it will be "True" but in Heroku it will be "False"
+# and that's what we need:
+DEBUG = development
+# We want to do it like this so in case if we have any error in heroku app (the life running),
+# we don't want to expose any internal source code on the erro page
+
 
 # Changing the ALLOWED_HOSTS list to add our heroku url for our app
 # ALLOWED_HOSTS = [] # it's empty by default
@@ -52,8 +68,15 @@ DEBUG = True
 
 # Instead of writing our host url directly, we also add a variable (CONSTANT) called "Heroku"
 # The same like as we did with the SECRET_KEY
-ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
+# ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
+# Using if condition to check:
+# if we are in development mode (local Django app) => then use our local host as "ALLOWED_HOSTS":
+if development:
+    ALLOWED_HOSTS = ['localhost']
+# otherwise use Heroku host:
+else:
+    ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
 # Application definition
 
@@ -108,14 +131,26 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    # Changing the value of the default database with a call to "dj_database_url.pars"
-    # Using parse(' The full url string from heroky goes here ') function and paste the the full Database URL from Heroku
-    # instead of placing the complex long string for our Heroku Postgres Database url,
-    # we can use again the os.environment.get() variable
-    # 'default': dj_database_url.parse('postgres://sjshrtjwkfpyos:cba8d8d7ccb1fe65ac63d3e2f0af01ed46b608bb12258df6068c1beac538387c@ec2-52-23-190-126.compute-1.amazonaws.com:5432/db9dsgqun1ns2b')
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-}
+
+# Using if condition to check:
+# if we are in development mode (local Django app) => then use this code to connect to our SQLite3 database:
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+# otherwise use the database URL configuration for Heroku:
+else:
+    DATABASES = {
+        # Changing the value of the default database with a call to "dj_database_url.pars"
+        # Using parse(' The full url string from heroky goes here ') function and paste the the full Database URL from Heroku
+        # instead of placing the complex long string for our Heroku Postgres Database url,
+        # we can use again the os.environment.get() variable
+        # 'default': dj_database_url.parse('postgres://sjshrtjwkfpyos:cba8d8d7ccb1fe65ac63d3e2f0af01ed46b608bb12258df6068c1beac538387c@ec2-52-23-190-126.compute-1.amazonaws.com:5432/db9dsgqun1ns2b')
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
