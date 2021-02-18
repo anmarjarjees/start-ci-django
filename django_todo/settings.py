@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 # Importing the dj_database_url to be used with our database connection:
+from pathlib import Path
 import dj_database_url
 
-from pathlib import Path
+# We need to import os to be used in this file:
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq'
+# Below is the default code:
+# SECRET_KEY = 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq'
+
+# Our changes:
+# Instead of setting the secret key manually (not secured and not recommended as written in Django comment)
+# We will use os.environ.get() method
+# We use this method to get an environment variable called "SECRET_KEY"
+# This function allowes us to set the secret key at the operating system level instead of in our code
+# os.envrion.get(argument1, argument2)
+# argument1 ==> will be the value of our SECRET_KEY that we need to set using the operating system level
+# argument2 ==> will be the default value to be used if the SECRET_KEY is not set
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,7 +47,12 @@ DEBUG = True
 # *****************************************************************
 # adding our urls:
 # Notice that we cannot include the "https://" and the last symbol "/"
-ALLOWED_HOSTS = ['anmar-todo-demo.herokuapp.com']
+# We can comment this code of writing/placing our url here and using the os.environ.get() feature to save our host url
+# ALLOWED_HOSTS = ['your-app-name.herokuapp.com']
+
+# Instead of writing our host url directly, we also add a variable (CONSTANT) called "Heroku"
+# The same like as we did with the SECRET_KEY
+ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
 
 # Application definition
@@ -91,7 +111,10 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 DATABASES = {
     # Changing the value of the default database with a call to "dj_database_url.pars"
     # Using parse(' The full url string from heroky goes here ') function and paste the the full Database URL from Heroku
-    'default': dj_database_url.parse('postgres://sjshrtjwkfpyos:cba8d8d7ccb1fe65ac63d3e2f0af01ed46b608bb12258df6068c1beac538387c@ec2-52-23-190-126.compute-1.amazonaws.com:5432/db9dsgqun1ns2b')
+    # instead of placing the complex long string for our Heroku Postgres Database url,
+    # we can use again the os.environment.get() variable
+    # 'default': dj_database_url.parse('postgres://sjshrtjwkfpyos:cba8d8d7ccb1fe65ac63d3e2f0af01ed46b608bb12258df6068c1beac538387c@ec2-52-23-190-126.compute-1.amazonaws.com:5432/db9dsgqun1ns2b')
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
 
 # Password validation
