@@ -44,8 +44,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # os.envrion.get(argument1, argument2)
 # argument1 ==> will be the value of our SECRET_KEY that we need to set using the operating system level
 # argument2 ==> will be the default value to be used if the SECRET_KEY is not set
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY', 'k5!mr=q&v(fz(af5omr^slfnk2xb4020paohr)d)_ati7&(*lq')
+# SECRET_KEY = os.environ.get('SECRET_KEY', 'The auto gerated value of the secret key')
+# Changing the default value of the secret key to a blank string
+# If the value of this environment variable " SECRET_KEY" is not set, Django server will not start
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # We will change this line, instead of DEBUG = True or DEBUG = False
