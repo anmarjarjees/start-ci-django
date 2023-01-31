@@ -1,3 +1,5 @@
+**NOTE: The following content of the README.md file and the boilerplate of this repo was generated from Code Institute - Gitpod-full-template to be used by my students to start their project using Gitpod. As shown below, once you use/activate this CI Template, it will replace the placeholder "Welcome USER_NAME" with "Welcome Your Full Name" based on your GitHub profile**
+
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 Welcome Anmar Jarjees,
